@@ -27,6 +27,8 @@ namespace NEA3
 
         private bool isRunning = false;
         private bool mouseDown = false;
+        private bool mouseMovingMass1 = false;
+        private bool mouseMovingMass2 = false;
         // This will allow the program to know if it has alredy been ran once
         // I update the strarting force in the Start_Click func
         // This means that evreytime I click it it will reset the force
@@ -153,11 +155,6 @@ namespace NEA3
             Int64[] firstMassBox = MathPlus.CheckInt(Mass1tb.Text);
             Int64[] secMassBox = MathPlus.CheckInt(Mass2tb.Text);
 
-            //Location
-            Int64[] x1 = MathPlus.CheckInt(m1X.Text);
-            Int64[] y1 = MathPlus.CheckInt(m1Y.Text);
-            Int64[] x2 = MathPlus.CheckInt(m2X.Text);
-            Int64[] y2 = MathPlus.CheckInt(m2Y.Text);
 
             // For first mass Force
             double[] StartForceX1 = MathPlus.CheckDouble(XStartForce1.Text);
@@ -210,11 +207,11 @@ namespace NEA3
                     mass1.location.Update(x1[1], y1[1]);
                     mass2.location.Update(x2[1], y2[1]);
                     check = true;
-                } else { check = false; }
-            } else { check = false; }
+                } 
+            }
 
             if (check) { IsValuesCorrect.Text = "location updated succsefuly"; }
-            else       { IsValuesCorrect.Text = "Bad location input"; }
+            else { IsValuesCorrect.Text = "Bad location input"; }
         }
 
         public void mainPanel_MouseDown(object sender, MouseEventArgs e)
@@ -226,6 +223,8 @@ namespace NEA3
         public void mainPanel_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+            mouseMovingMass1 = false;
+            mouseMovingMass2 = false;
             if (canRun & !Start.Enabled) { isRunning = true; }
         }
 
@@ -243,18 +242,22 @@ namespace NEA3
 
             if (mouseDown)
             {
-                Console.WriteLine(cursorPos + " mousedown ");
-                Console.WriteLine(mass1X + " massPos " + mass1Y);
+                Console.WriteLine(mouseMovingMass1 + " mass1Move");
+                Console.WriteLine(mouseMovingMass2 + " mass2Move");
+                //Console.WriteLine(cursorPos + " mousedown ");
+                //Console.WriteLine(mass1X + " massPos " + mass1Y);
                 //Console.WriteLine(Cursor.Size.Width + " wh " + Cursor.Size.Height);
                 if (cursorX >= mass1X - 15 & cursorX <= mass1X + 15 &
-                    cursorY >= mass1Y - 15 & cursorY <= mass1Y + 15)
+                    cursorY >= mass1Y - 15 & cursorY <= mass1Y + 15 & !mouseMovingMass2)
                 {
                     mass1.location.Update(cursorX, cursorY);
+                    mouseMovingMass1 = true;
                 }
                 if (cursorX >= mass2X - 15 & cursorX <= mass2X + 15 &
-                    cursorY >= mass2Y - 15 & cursorY <= mass2Y + 15)
+                    cursorY >= mass2Y - 15 & cursorY <= mass2Y + 15 & !mouseMovingMass1)
                 {
                     mass2.location.Update(cursorX, cursorY);
+                    mouseMovingMass2 = true;
                 }
             }
         }
