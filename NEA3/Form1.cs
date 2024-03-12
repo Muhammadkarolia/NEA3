@@ -1,0 +1,289 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Microsoft.Win32;
+
+namespace NEA3
+{
+    public partial class Form1 : Form
+    {
+        // Stuff to do with masses
+        private static BetterVector m1I = new BetterVector(300, 200);
+        private static BetterVector m2I = new BetterVector(500, 400);
+        private static Mass mass1 = new Mass("Mass1", new BetterVector(17, 17), m1I, new SolidBrush(Color.Blue));
+        private static Mass mass2 = new Mass("Mass2", new BetterVector(17, 17), m2I, new SolidBrush(Color.Red));
+        private static List<Mass> listMasses = new List<Mass>();
+        private double xStartingForce1; // maybey TODO: Also add velocity 
+        private double yStartingForce1;
+        private double xStartingForce2; 
+        private double yStartingForce2;
+
+        private bool isRunning = false;
+        private bool mouseDown = false;
+        // This will allow the program to know if it has alredy been ran once
+        // I update the strarting force in the Start_Click func
+        // This means that evreytime I click it it will reset the force
+        // This bool stops that
+        private bool canRun = false;
+
+        public Form1() { InitializeComponent(); }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
+            listMasses.Add(mass1);
+            listMasses.Add(mass2);
+
+            foreach (Mass mass in listMasses)
+            {
+                mass.location = mass.startPos;
+            }
+        }
+
+        // handels painting of mainPanel
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+            if (isRunning)
+            {
+                // This loop alows me to have more masses in the simulation
+                foreach (Mass x in listMasses)
+                {
+                    foreach(Mass y in listMasses)
+                    {
+                        if (x != y)
+                        {
+                            makeGravHappen(x, y);
+                        }
+                    }
+                }
+            }
+
+            foreach (Mass mass in listMasses)
+            {
+                Draw(mass, e.Graphics);
+            }
+
+        }
+
+        private void makeGravHappen(Mass m1, Mass m2)
+        {
+            m1.otherMass = m2.mass;
+            m1.location.Update(m1.location.x, m1.location.y);
+            m1.otherLocation.Update(m2.location.x, m2.location.y);
+            BetterVector force = MathPlus.ForceOfGrav(m1);
+            m1.Move(force);
+        }
+
+        private void Start_Click(object sender, EventArgs e)
+        {
+            if (canRun) 
+            { 
+                isRunning = true;
+                Stop.Enabled = true;
+                Start.Enabled = false;
+            }
+            else 
+            { 
+                IsValuesCorrect.Text = "Update values before pressing start";
+            }
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            Stop.Enabled = false;
+            Start.Enabled = true;
+            isRunning = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            string mass1Loc = $"X: {(int)mass1.location.x} Y: {(int)mass1.location.y}";
+            string mass2Loc = $"X: {(int)mass2.location.x} Y: {(int)mass2.location.y}";
+            locationBox.Text = mass1Loc; 
+            locationBox.AppendText(Environment.NewLine);
+            locationBox.AppendText(mass2Loc);
+
+            mainPanel.Refresh();
+        }
+
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            isRunning = false;
+            Start.Enabled = true;
+            Stop.Enabled = false;
+            canRun = false;
+            xStartingForce1 = 0;
+            yStartingForce1 = 0;
+
+            // Also not expandalbe, TOODO: Make expandalbe
+            mass1.location.Update(mass1.startPos.x, mass1.startPos.y);
+            mass1.velocity.Update(0, 0);
+            mass1.acceleration.Update(0, 0);
+            mass2.location.Update(mass2.startPos.x, mass2.startPos.y);
+            mass2.velocity.Update(0, 0);
+            mass2.acceleration.Update(0, 0);
+        }
+
+        private void Draw(Mass Mass_, Graphics g)
+        {
+            float x = (float)Mass_.location.x;
+            float y = (float)Mass_.location.y;
+            //Console.WriteLine(x + " " + y);
+            //Console.WriteLine(Mass_.name);
+            g.FillEllipse(Mass_.color, x, y, Mass_.width, Mass_.height);
+        }
+
+        private void ValueUpdate_Click(object sender, EventArgs e)
+        {
+            bool firstCheck = false;
+            bool secCheck = false;
+
+            // The first item returened will be either 1 or 0
+            // if it is 0 then the txt is no possialbe be int
+            // the secound item is the converted text#
+            // Not expandalbe, TOODO: Make expandalbe
+            //Mass
+            Int64[] firstMassBox = MathPlus.CheckInt(Mass1tb.Text);
+            Int64[] secMassBox = MathPlus.CheckInt(Mass2tb.Text);
+
+            //Location
+            Int64[] x1 = MathPlus.CheckInt(m1X.Text);
+            Int64[] y1 = MathPlus.CheckInt(m1Y.Text);
+            Int64[] x2 = MathPlus.CheckInt(m2X.Text);
+            Int64[] y2 = MathPlus.CheckInt(m2Y.Text);
+
+            // For first mass Force
+            double[] StartForceX1 = MathPlus.CheckDouble(XStartForce1.Text);
+            double[] StartForceY1 = MathPlus.CheckDouble(YStartForce1.Text);
+            // For sec mass Force
+            double[] StartForceX2 = MathPlus.CheckDouble(XStartForce2.Text);
+            double[] StartForceY2 = MathPlus.CheckDouble(YStartForce2.Text);
+
+            if (firstMassBox[0] == 1 & secMassBox[0] == 1)
+            {
+                mass1.mass = firstMassBox[1];
+                mass2.mass = secMassBox[1];
+                firstCheck = true;
+            }
+
+            if (StartForceX1[0] == 1 & StartForceY1[0] == 1)
+            {
+                xStartingForce1 = StartForceX1[1];
+                yStartingForce1 = StartForceY1[1];
+                mass1.velocity.Update(xStartingForce1, yStartingForce1);
+                if (StartForceX2[0] == 1 & StartForceY2[0] == 1)
+                {
+                    xStartingForce2 = StartForceX2[1];
+                    yStartingForce2 = StartForceY2[1];
+                    mass2.velocity.Update(xStartingForce2, yStartingForce2);
+                    secCheck = true;
+                }
+            }
+
+            // Changes IsValuesCorrect based on wich inputs are incorrect
+            if (firstCheck & secCheck) {canRun = true; IsValuesCorrect.Text = "Values updated successfully";} 
+            else if (!firstCheck & !secCheck) { IsValuesCorrect.Text = "Multiple bad inputs"; }
+            else if (!firstCheck) { IsValuesCorrect.Text = "Bad mass input"; }
+            else { IsValuesCorrect.Text = "Bad force input"; }
+        }
+
+        private void LocationUpdate_Click(object sender, EventArgs e)
+        {
+            bool check = false;
+
+            Int64[] x1 = MathPlus.CheckInt(m1X.Text);
+            Int64[] y1 = MathPlus.CheckInt(m1Y.Text);
+            Int64[] x2 = MathPlus.CheckInt(m2X.Text);
+            Int64[] y2 = MathPlus.CheckInt(m2Y.Text);
+
+            if (x1[0] == 1 & y1[0] == 1)
+            {
+                if (x2[0] == 1 & y2[0] == 1)
+                {
+                    mass1.location.Update(x1[1], y1[1]);
+                    mass2.location.Update(x2[1], y2[1]);
+                    check = true;
+                } else { check = false; }
+            } else { check = false; }
+
+            if (check) { IsValuesCorrect.Text = "location updated succsefuly"; }
+            else       { IsValuesCorrect.Text = "Bad location input"; }
+        }
+
+        public void mainPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            isRunning = false;
+        }
+
+        public void mainPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+            if (canRun & !Start.Enabled) { isRunning = true; }
+        }
+
+        public void mainPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point cursorPos = PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
+            double cursorX = cursorPos.X - 15;
+            double cursorY = cursorPos.Y - 12;
+
+            double mass1X = mass1.location.x;
+            double mass1Y = mass1.location.y;
+
+            double mass2X = mass2.location.x;
+            double mass2Y = mass2.location.y;
+
+            if (mouseDown)
+            {
+                Console.WriteLine(cursorPos + " mousedown ");
+                Console.WriteLine(mass1X + " massPos " + mass1Y);
+                //Console.WriteLine(Cursor.Size.Width + " wh " + Cursor.Size.Height);
+                if (cursorX >= mass1X - 15 & cursorX <= mass1X + 15 &
+                    cursorY >= mass1Y - 15 & cursorY <= mass1Y + 15)
+                {
+                    mass1.location.Update(cursorX, cursorY);
+                    MouseSensitivity.SetSensitivity(2);
+                }
+                if (cursorX >= mass2X - 15 & cursorX <= mass2X + 15 &
+                    cursorY >= mass2Y - 15 & cursorY <= mass2Y + 15)
+                {
+                    mass2.location.Update(cursorX, cursorY);
+                }
+            }
+        }
+        public class MouseSensitivity
+        {
+            const string ControlPanelPath = @"Control Panel\Mouse";
+
+            public static void SetSensitivity(int sensitivity)
+            {
+                try
+                {
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(ControlPanelPath, true);
+                    if (key != null)
+                    {
+                        key.SetValue("MouseSensitivity", sensitivity.ToString(), RegistryValueKind.String);
+                        Console.WriteLine("Key " + key);
+                        key.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: Could not access registry key.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+        }
+    }
+}
