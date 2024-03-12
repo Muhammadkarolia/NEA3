@@ -250,38 +250,11 @@ namespace NEA3
                     cursorY >= mass1Y - 15 & cursorY <= mass1Y + 15)
                 {
                     mass1.location.Update(cursorX, cursorY);
-                    MouseSensitivity.SetSensitivity(2);
                 }
                 if (cursorX >= mass2X - 15 & cursorX <= mass2X + 15 &
                     cursorY >= mass2Y - 15 & cursorY <= mass2Y + 15)
                 {
                     mass2.location.Update(cursorX, cursorY);
-                }
-            }
-        }
-        public class MouseSensitivity
-        {
-            const string ControlPanelPath = @"Control Panel\Mouse";
-
-            public static void SetSensitivity(int sensitivity)
-            {
-                try
-                {
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(ControlPanelPath, true);
-                    if (key != null)
-                    {
-                        key.SetValue("MouseSensitivity", sensitivity.ToString(), RegistryValueKind.String);
-                        Console.WriteLine("Key " + key);
-                        key.Close();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: Could not access registry key.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
                 }
             }
         }
