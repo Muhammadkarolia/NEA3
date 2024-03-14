@@ -29,17 +29,21 @@ namespace NEA3
         private bool mouseDown = false;
         private bool mouseMovingMass1 = false;
         private bool mouseMovingMass2 = false;
+        private bool graphFormActive = false;
         // This will allow the program to know if it has alredy been ran once
         // I update the strarting force in the Start_Click func
         // This means that evreytime I click it it will reset the force
         // This bool stops that
         private bool canRun = false;
 
+        GraphForm graphForm = new GraphForm();
+        int x = 30;
+
         public Form1() { InitializeComponent(); }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Start();
+            graphForm.Hide();
             listMasses.Add(mass1);
             listMasses.Add(mass2);
 
@@ -54,7 +58,6 @@ namespace NEA3
         {
             if (isRunning)
             {
-                // This loop alows me to have more masses in the simulation
                 foreach (Mass x in listMasses)
                 {
                     foreach(Mass y in listMasses)
@@ -88,6 +91,7 @@ namespace NEA3
             if (canRun) 
             { 
                 isRunning = true;
+                timer1.Start();
                 Stop.Enabled = true;
                 Start.Enabled = false;
             }
@@ -102,6 +106,7 @@ namespace NEA3
             Stop.Enabled = false;
             Start.Enabled = true;
             isRunning = false;
+            timer1.Stop();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -111,7 +116,9 @@ namespace NEA3
             locationBox.Text = mass1Loc; 
             locationBox.AppendText(Environment.NewLine);
             locationBox.AppendText(mass2Loc);
-
+            if (graphFormActive & isRunning) { graphForm.AddToPoint(new Point(x, 10*(int)mass1.Speed())); }
+            x += 1;
+            Console.WriteLine(x + " x");
             mainPanel.Refresh();
         }
 
@@ -123,6 +130,7 @@ namespace NEA3
             canRun = false;
             xStartingForce1 = 0;
             yStartingForce1 = 0;
+            x = 30;
 
             // Also not expandalbe, TOODO: Make expandalbe
             mass1.location.Update(mass1.startPos.x, mass1.startPos.y);
@@ -131,6 +139,10 @@ namespace NEA3
             mass2.location.Update(mass2.startPos.x, mass2.startPos.y);
             mass2.velocity.Update(0, 0);
             mass2.acceleration.Update(0, 0);
+            mainPanel.Refresh();
+
+            timer1.Stop();
+            graphForm.Reset();
         }
 
         private void Draw(Mass Mass_, Graphics g)
@@ -242,8 +254,8 @@ namespace NEA3
 
             if (mouseDown)
             {
-                Console.WriteLine(mouseMovingMass1 + " mass1Move");
-                Console.WriteLine(mouseMovingMass2 + " mass2Move");
+                //Console.WriteLine(mouseMovingMass1 + " mass1Move");
+                //Console.WriteLine(mouseMovingMass2 + " mass2Move");
                 //Console.WriteLine(cursorPos + " mousedown ");
                 //Console.WriteLine(mass1X + " massPos " + mass1Y);
                 //Console.WriteLine(Cursor.Size.Width + " wh " + Cursor.Size.Height);
@@ -260,6 +272,12 @@ namespace NEA3
                     mouseMovingMass2 = true;
                 }
             }
+        }
+
+        private void velGraph_Click(object sender, EventArgs e)
+        {
+            graphForm.Show();
+            graphFormActive = true;
         }
     }
 }

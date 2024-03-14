@@ -79,6 +79,7 @@ namespace NEA3
 
         public double y
         {
+            
             get
             {
                 return y_;
@@ -113,6 +114,5 @@ namespace NEA3
             // root (x² + y²)
             return (float)Math.Sqrt(x_ * x_ + y_ * y_);
         }
-
     }
 }

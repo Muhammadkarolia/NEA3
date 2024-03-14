@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,14 @@ namespace NEA3
             location.Add(velocity);
             // reset acceleration
             acceleration.Mult(0);
+        }
+
+        public double Speed()
+        {
+            // a² + b² = c²
+            double xSqr = velocity.x * velocity.x;
+            double ySqr = velocity.y * velocity.y;
+            return Math.Sqrt(xSqr + ySqr);
         }
 
     }

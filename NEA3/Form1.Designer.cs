@@ -42,6 +42,8 @@
             this.Start = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.propertiesPanel = new System.Windows.Forms.Panel();
+            this.velGraph = new System.Windows.Forms.Button();
+            this.LocationUpdate = new System.Windows.Forms.Button();
             this.IsValuesCorrect = new System.Windows.Forms.TextBox();
             this.ValueUpdate = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,7 +61,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.LocationUpdate = new System.Windows.Forms.Button();
             this.locationBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainPanel)).BeginInit();
             this.propertiesPanel.SuspendLayout();
@@ -80,9 +81,8 @@
             this.mainPanel.TabStop = false;
             this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             this.mainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseDown);
-            this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             this.mainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseMove);
-            
+            this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             // 
             // Reset
             // 
@@ -203,6 +203,7 @@
             this.propertiesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.propertiesPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.propertiesPanel.Controls.Add(this.velGraph);
             this.propertiesPanel.Controls.Add(this.LocationUpdate);
             this.propertiesPanel.Controls.Add(this.IsValuesCorrect);
             this.propertiesPanel.Controls.Add(this.ValueUpdate);
@@ -236,6 +237,27 @@
             this.propertiesPanel.Name = "propertiesPanel";
             this.propertiesPanel.Size = new System.Drawing.Size(213, 569);
             this.propertiesPanel.TabIndex = 33;
+            // 
+            // velGraph
+            // 
+            this.velGraph.Location = new System.Drawing.Point(8, 483);
+            this.velGraph.Name = "velGraph";
+            this.velGraph.Size = new System.Drawing.Size(198, 23);
+            this.velGraph.TabIndex = 59;
+            this.velGraph.Text = "Graph the velocity";
+            this.velGraph.UseVisualStyleBackColor = true;
+            this.velGraph.Click += new System.EventHandler(this.velGraph_Click);
+            // 
+            // LocationUpdate
+            // 
+            this.LocationUpdate.Location = new System.Drawing.Point(8, 255);
+            this.LocationUpdate.Margin = new System.Windows.Forms.Padding(2);
+            this.LocationUpdate.Name = "LocationUpdate";
+            this.LocationUpdate.Size = new System.Drawing.Size(102, 21);
+            this.LocationUpdate.TabIndex = 57;
+            this.LocationUpdate.Text = "Update Locations";
+            this.LocationUpdate.UseVisualStyleBackColor = true;
+            this.LocationUpdate.Click += new System.EventHandler(this.LocationUpdate_Click);
             // 
             // IsValuesCorrect
             // 
@@ -400,17 +422,6 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // LocationUpdate
-            // 
-            this.LocationUpdate.Location = new System.Drawing.Point(8, 255);
-            this.LocationUpdate.Margin = new System.Windows.Forms.Padding(2);
-            this.LocationUpdate.Name = "LocationUpdate";
-            this.LocationUpdate.Size = new System.Drawing.Size(102, 21);
-            this.LocationUpdate.TabIndex = 57;
-            this.LocationUpdate.Text = "Update Locations";
-            this.LocationUpdate.UseVisualStyleBackColor = true;
-            this.LocationUpdate.Click += new System.EventHandler(this.LocationUpdate_Click);
-            // 
             // locationBox
             // 
             this.locationBox.BackColor = System.Drawing.Color.Black;
@@ -475,6 +486,7 @@
         private System.Windows.Forms.TextBox IsValuesCorrect;
         private System.Windows.Forms.Button LocationUpdate;
         private System.Windows.Forms.TextBox locationBox;
+        private System.Windows.Forms.Button velGraph;
     }
 }
 
