@@ -36,8 +36,8 @@ namespace NEA3
         // This bool stops that
         private bool canRun = false;
 
-        GraphForm graphForm = new GraphForm();
-        int x = 30;
+        private GraphForm graphForm = new GraphForm();
+        private int x = 30;
 
         public Form1() { InitializeComponent(); }
 
@@ -118,7 +118,6 @@ namespace NEA3
             locationBox.AppendText(mass2Loc);
             if (graphFormActive & isRunning) { graphForm.AddToPoint(new Point(x, 10*(int)mass1.Speed())); }
             x += 1;
-            Console.WriteLine(x + " x");
             mainPanel.Refresh();
         }
 
@@ -149,8 +148,6 @@ namespace NEA3
         {
             float x = (float)Mass_.location.x;
             float y = (float)Mass_.location.y;
-            //Console.WriteLine(x + " " + y);
-            //Console.WriteLine(Mass_.name);
             g.FillEllipse(Mass_.color, x, y, Mass_.width, Mass_.height);
         }
 
@@ -254,11 +251,6 @@ namespace NEA3
 
             if (mouseDown)
             {
-                //Console.WriteLine(mouseMovingMass1 + " mass1Move");
-                //Console.WriteLine(mouseMovingMass2 + " mass2Move");
-                //Console.WriteLine(cursorPos + " mousedown ");
-                //Console.WriteLine(mass1X + " massPos " + mass1Y);
-                //Console.WriteLine(Cursor.Size.Width + " wh " + Cursor.Size.Height);
                 if (cursorX >= mass1X - 15 & cursorX <= mass1X + 15 &
                     cursorY >= mass1Y - 15 & cursorY <= mass1Y + 15 & !mouseMovingMass2)
                 {
