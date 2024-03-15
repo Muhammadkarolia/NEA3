@@ -116,7 +116,7 @@ namespace NEA3
             locationBox.Text = mass1Loc; 
             locationBox.AppendText(Environment.NewLine);
             locationBox.AppendText(mass2Loc);
-            if (graphFormActive & isRunning) { graphForm.AddToPoint(new Point(x, 10*(int)mass1.Speed())); }
+            if (graphFormActive & isRunning) { graphForm.AddPoint(new Point(x, 10*(int)mass1.Speed() + 150 )); }
             x += 1;
             mainPanel.Refresh();
         }
@@ -256,12 +256,14 @@ namespace NEA3
                 {
                     mass1.location.Update(cursorX, cursorY);
                     mouseMovingMass1 = true;
+                    mainPanel.Refresh();
                 }
                 if (cursorX >= mass2X - 15 & cursorX <= mass2X + 15 &
                     cursorY >= mass2Y - 15 & cursorY <= mass2Y + 15 & !mouseMovingMass1)
                 {
                     mass2.location.Update(cursorX, cursorY);
                     mouseMovingMass2 = true;
+                    mainPanel.Refresh();
                 }
             }
         }

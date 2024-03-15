@@ -36,7 +36,6 @@
             // 
             // mainPanel
             // 
-            this.mainPanel.Controls.Add(this.yAxis);
             this.mainPanel.Controls.Add(this.xAxis);
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Name = "mainPanel";
@@ -48,7 +47,7 @@
             // 
             this.yAxis.BackColor = System.Drawing.SystemColors.Control;
             this.yAxis.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.yAxis.Location = new System.Drawing.Point(568, 536);
+            this.yAxis.Location = new System.Drawing.Point(572, 558);
             this.yAxis.Name = "yAxis";
             this.yAxis.Size = new System.Drawing.Size(43, 13);
             this.yAxis.TabIndex = 1;
@@ -69,6 +68,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 653);
+            this.Controls.Add(this.yAxis);
             this.Controls.Add(this.mainPanel);
             this.Name = "GraphForm";
             this.Text = "GraphForm";
@@ -76,6 +76,7 @@
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

@@ -26,9 +26,12 @@ namespace NEA3
 
         public void draw(object sender, PaintEventArgs e)
         {
+            e.Graphics.ScaleTransform(1.0F, -1.0F);
+            e.Graphics.TranslateTransform(0.0F, -(float)Height);
+            
             Pen pen = new Pen(Color.Black, 3);
-            Point[] linePointX = { new Point(30, 526), new Point(1100, 526) };
-            Point[] linePointY = { new Point(30, 526), new Point(30, 12) };
+            Point[] linePointX = { new Point(30, 150), new Point(1100, 150) };
+            Point[] linePointY = { new Point(30, 150), new Point(30, 650) };
             e.Graphics.DrawLines(pen, linePointX);
             e.Graphics.DrawLines(pen, linePointY);
             if (itemAdded)
@@ -42,7 +45,7 @@ namespace NEA3
             }
         }
         
-        public void AddToPoint(Point coords_)
+        public void AddPoint(Point coords_)
         {
             coords.Enqueue(coords_);
             itemAdded = true;
