@@ -489,4 +489,3 @@
         private System.Windows.Forms.Button velGraph;
     }
 }
-

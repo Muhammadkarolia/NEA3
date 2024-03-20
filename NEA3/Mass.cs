@@ -12,11 +12,10 @@ namespace NEA3
     internal class Mass
     {
 
-        public BetterVector startPos;
         public string name;
-        public SolidBrush color;
         public BetterVector size;
        
+        public BetterVector startPos;
         public BetterVector location;
         public BetterVector otherLocation;
         public BetterVector velocity = new BetterVector(0, 0);
@@ -24,6 +23,7 @@ namespace NEA3
         public float mass;
         public float otherMass;
 
+        public SolidBrush color;
         public float width;
         public float height;
 
@@ -51,11 +51,12 @@ namespace NEA3
             acceleration.Mult(0);
         }
 
-        public double Speed()
+        public double getSpeed()
         {
             // a² + b² = c²
             double xSqr = velocity.x * velocity.x;
             double ySqr = velocity.y * velocity.y;
+            Console.WriteLine(name + " " + Math.Sqrt(xSqr + ySqr));
             return Math.Sqrt(xSqr + ySqr);
         }
 

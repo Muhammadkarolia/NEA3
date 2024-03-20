@@ -37,7 +37,7 @@ namespace NEA3
         private bool canRun = false;
 
         private GraphForm graphForm = new GraphForm();
-        private int x = 30;
+        private int xGraph = 30;
 
         public Form1() { InitializeComponent(); }
 
@@ -60,7 +60,7 @@ namespace NEA3
             {
                 foreach (Mass x in listMasses)
                 {
-                    foreach(Mass y in listMasses)
+                    foreach (Mass y in listMasses)
                     {
                         if (x != y)
                         {
@@ -116,8 +116,11 @@ namespace NEA3
             locationBox.Text = mass1Loc; 
             locationBox.AppendText(Environment.NewLine);
             locationBox.AppendText(mass2Loc);
-            if (graphFormActive & isRunning) { graphForm.AddPoint(new Point(x, 10*(int)mass1.Speed() + 150 )); }
-            x += 1;
+            Point Coords1 = new Point(xGraph, 50 * (int)mass1.getSpeed() + 150);
+            Point Coords2 = new Point(xGraph, 50 * (int)mass2.getSpeed() + 150);
+            if (graphFormActive & isRunning) { graphForm.AddPoint(Coords1, Coords2); }
+            xGraph += 1;
+            Console.WriteLine(mass1.getSpeed() + " m2: " + mass2.getSpeed());
             mainPanel.Refresh();
         }
 
@@ -129,7 +132,7 @@ namespace NEA3
             canRun = false;
             xStartingForce1 = 0;
             yStartingForce1 = 0;
-            x = 30;
+            xGraph = 30;
 
             // Also not expandalbe, TOODO: Make expandalbe
             mass1.location.Update(mass1.startPos.x, mass1.startPos.y);

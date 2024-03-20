@@ -28,30 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.yAxis = new System.Windows.Forms.TextBox();
+            this.mass1Panel = new System.Windows.Forms.Panel();
             this.xAxis = new System.Windows.Forms.TextBox();
-            this.mainPanel.SuspendLayout();
+            this.mass2Panel = new System.Windows.Forms.Panel();
+            this.yAxis = new System.Windows.Forms.TextBox();
+            this.Change = new System.Windows.Forms.Button();
+            this.mass1Panel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mainPanel
+            // mass1Panel
             // 
-            this.mainPanel.Controls.Add(this.xAxis);
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1155, 552);
-            this.mainPanel.TabIndex = 0;
-            this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.draw);
+            this.mass1Panel.Controls.Add(this.xAxis);
+            this.mass1Panel.Controls.Add(this.mass2Panel);
+            this.mass1Panel.Location = new System.Drawing.Point(0, 0);
+            this.mass1Panel.Name = "mass1Panel";
+            this.mass1Panel.Size = new System.Drawing.Size(1155, 552);
+            this.mass1Panel.TabIndex = 0;
+            this.mass1Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel1);
             // 
-            // yAxis
+            // mass2Panel
             // 
-            this.yAxis.BackColor = System.Drawing.SystemColors.Control;
-            this.yAxis.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.yAxis.Location = new System.Drawing.Point(572, 558);
-            this.yAxis.Name = "yAxis";
-            this.yAxis.Size = new System.Drawing.Size(43, 13);
-            this.yAxis.TabIndex = 1;
-            this.yAxis.Text = "Time";
+            this.mass2Panel.Location = new System.Drawing.Point(0, 0);
+            this.mass2Panel.Name = "mass2Panel";
+            this.mass2Panel.Size = new System.Drawing.Size(1155, 552);
+            this.mass2Panel.TabIndex = 1;
+            this.mass2Panel.Visible = false;
+            this.mass2Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel2);
             // 
             // xAxis
             // 
@@ -63,18 +65,39 @@
             this.xAxis.TabIndex = 0;
             this.xAxis.Text = "Speed";
             // 
+            // yAxis
+            // 
+            this.yAxis.BackColor = System.Drawing.SystemColors.Control;
+            this.yAxis.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.yAxis.Location = new System.Drawing.Point(572, 558);
+            this.yAxis.Name = "yAxis";
+            this.yAxis.Size = new System.Drawing.Size(43, 13);
+            this.yAxis.TabIndex = 1;
+            this.yAxis.Text = "Time";
+            // 
+            // Change
+            // 
+            this.Change.Location = new System.Drawing.Point(1021, 606);
+            this.Change.Name = "Change";
+            this.Change.Size = new System.Drawing.Size(122, 23);
+            this.Change.TabIndex = 0;
+            this.Change.Text = "Change mass ";
+            this.Change.UseVisualStyleBackColor = true;
+            this.Change.Click += new System.EventHandler(this.Change_Click);
+            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 653);
+            this.Controls.Add(this.Change);
             this.Controls.Add(this.yAxis);
-            this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.mass1Panel);
             this.Name = "GraphForm";
             this.Text = "GraphForm";
             this.Load += new System.EventHandler(this.GraphForm_Load);
-            this.mainPanel.ResumeLayout(false);
-            this.mainPanel.PerformLayout();
+            this.mass1Panel.ResumeLayout(false);
+            this.mass1Panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,8 +105,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Panel mass1Panel;
         private System.Windows.Forms.TextBox xAxis;
         private System.Windows.Forms.TextBox yAxis;
+        private System.Windows.Forms.Panel mass2Panel;
+        private System.Windows.Forms.Button Change;
     }
 }
