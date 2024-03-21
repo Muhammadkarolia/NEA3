@@ -119,6 +119,7 @@ namespace NEA3
             Point Coords1 = new Point(xGraph, 50 * (int)mass1.getSpeed() + 150);
             Point Coords2 = new Point(xGraph, 50 * (int)mass2.getSpeed() + 150);
             if (graphFormActive & isRunning) { graphForm.AddPoint(Coords1, Coords2); }
+            Console.WriteLine(Coords2 + " YAYYY");
             xGraph += 1;
             Console.WriteLine(mass1.getSpeed() + " m2: " + mass2.getSpeed());
             mainPanel.Refresh();
