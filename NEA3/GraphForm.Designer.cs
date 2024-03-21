@@ -29,19 +29,41 @@
         private void InitializeComponent()
         {
             this.mass1Panel = new System.Windows.Forms.Panel();
-            this.xAxis = new System.Windows.Forms.TextBox();
             this.mass2Panel = new System.Windows.Forms.Panel();
+            this.Identifier = new System.Windows.Forms.TextBox();
+            this.xAxis = new System.Windows.Forms.TextBox();
             this.yAxis = new System.Windows.Forms.TextBox();
             this.Change = new System.Windows.Forms.Button();
+            this.mass1Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // mass1Panel
             // 
+            this.mass1Panel.Controls.Add(this.mass2Panel);
             this.mass1Panel.Location = new System.Drawing.Point(1, 0);
             this.mass1Panel.Name = "mass1Panel";
             this.mass1Panel.Size = new System.Drawing.Size(1154, 600);
             this.mass1Panel.TabIndex = 0;
             this.mass1Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel1);
+            // 
+            // mass2Panel
+            // 
+            this.mass2Panel.Location = new System.Drawing.Point(1, 0);
+            this.mass2Panel.Name = "mass2Panel";
+            this.mass2Panel.Size = new System.Drawing.Size(1152, 597);
+            this.mass2Panel.TabIndex = 1;
+            this.mass2Panel.Visible = false;
+            this.mass2Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel2);
+            // 
+            // Identifier
+            // 
+            this.Identifier.BackColor = System.Drawing.SystemColors.Control;
+            this.Identifier.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Identifier.Location = new System.Drawing.Point(1, 611);
+            this.Identifier.Name = "Identifier";
+            this.Identifier.Size = new System.Drawing.Size(83, 13);
+            this.Identifier.TabIndex = 2;
+            this.Identifier.Text = "Mass1 shown";
             // 
             // xAxis
             // 
@@ -52,15 +74,6 @@
             this.xAxis.Size = new System.Drawing.Size(43, 13);
             this.xAxis.TabIndex = 0;
             this.xAxis.Text = "Speed";
-            // 
-            // mass2Panel
-            // 
-            this.mass2Panel.Location = new System.Drawing.Point(1, 3);
-            this.mass2Panel.Name = "mass2Panel";
-            this.mass2Panel.Size = new System.Drawing.Size(1152, 597);
-            this.mass2Panel.TabIndex = 1;
-            this.mass2Panel.Visible = false;
-            this.mass2Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel2);
             // 
             // yAxis
             // 
@@ -87,7 +100,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 653);
-            this.Controls.Add(this.mass2Panel);
+            this.Controls.Add(this.Identifier);
             this.Controls.Add(this.xAxis);
             this.Controls.Add(this.Change);
             this.Controls.Add(this.yAxis);
@@ -95,6 +108,7 @@
             this.Name = "GraphForm";
             this.Text = "GraphForm";
             this.Load += new System.EventHandler(this.GraphForm_Load);
+            this.mass1Panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,5 +121,6 @@
         private System.Windows.Forms.TextBox yAxis;
         private System.Windows.Forms.Panel mass2Panel;
         private System.Windows.Forms.Button Change;
+        private System.Windows.Forms.TextBox Identifier;
     }
 }

@@ -37,7 +37,7 @@ namespace NEA3
 
         public void drawPanel1(object sender, PaintEventArgs e)
         {
-            e.Graphics.ScaleTransform(1.0F, -1.0F);
+            e.Graphics.ScaleTransform(1.0f, -1.0F);
             e.Graphics.TranslateTransform(0.0F, -(float)Height);
 
             e.Graphics.DrawLines(pen, linePointX);
@@ -90,9 +90,9 @@ namespace NEA3
         private void Change_Click(object sender, EventArgs e)
         {
             if (!isChange) 
-            { mass2Panel.Show(); isChange = true; }
+            { mass2Panel.Show(); isChange = true;  Identifier.Text = "Mass2 shown"; }
             else 
-            { mass2Panel.Hide(); isChange = false; }
+            { mass2Panel.Hide(); isChange = false; Identifier.Text = "Mass1 shown"; }
         }
 
         public bool isChanged()

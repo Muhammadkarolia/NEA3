@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -142,8 +143,7 @@ namespace NEA3
             mass2.location.Update(mass2.startPos.x, mass2.startPos.y);
             mass2.velocity.Update(0, 0);
             mass2.acceleration.Update(0, 0);
-            mainPanel.Refresh();
-
+            mainPanel.Refresh();                
             timer1.Stop();
             graphForm.Reset();
         }
@@ -153,6 +153,11 @@ namespace NEA3
             float x = (float)Mass_.location.x;
             float y = (float)Mass_.location.y;
             g.FillEllipse(Mass_.color, x, y, Mass_.width, Mass_.height);
+
+            float x1 = (float)Mass_.location.x + (float)Mass_.velocity.x * 10;
+            float y2 = (float)Mass_.location.y + (float)Mass_.velocity.y * 10;
+            // pen, x1, y1, x2, y2
+             g.DrawLine(new Pen(Mass_.color) { Width = 2, EndCap = LineCap.ArrowAnchor }, x + 10, y + 10, x1, y2);
         }
 
         private void ValueUpdate_Click(object sender, EventArgs e)
