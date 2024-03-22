@@ -25,6 +25,8 @@ namespace NEA3
         private double yStartingForce1;
         private double xStartingForce2; 
         private double yStartingForce2;
+        private List<Point> orbitLines1 = new List<Point>();
+        private List<Point> orbitLines2 = new List<Point>();
 
         private bool isRunning = false;
         private bool mouseDown = false;
@@ -132,8 +134,8 @@ namespace NEA3
             Start.Enabled = true;
             Stop.Enabled = false;
             canRun = false;
-            xStartingForce1 = 0;
-            yStartingForce1 = 0;
+            xStartingForce1 = 0;    yStartingForce1 = 0;
+            orbitLines1.Clear();    orbitLines2.Clear();
             xGraph = 30;
 
             // Also not expandalbe, TOODO: Make expandalbe
@@ -143,8 +145,8 @@ namespace NEA3
             mass2.location.Update(mass2.startPos.x, mass2.startPos.y);
             mass2.velocity.Update(0, 0);
             mass2.acceleration.Update(0, 0);
-            mainPanel.Refresh();                
             timer1.Stop();
+            mainPanel.Refresh();                
             graphForm.Reset();
         }
 
@@ -166,6 +168,30 @@ namespace NEA3
 
             // Draw orbit line
 
+            Point[] foo;
+            try
+            {
+                if (Mass_.name == "Mass1")
+                {
+                    orbitLines1.Add(new Point((int)x + 10, (int)y + 10));
+                    foo = orbitLines1.ToArray();
+                    g.DrawLines(new Pen(Color.White) { Width = 2 }, foo);
+                    if(orbitLines1.Count > 500) // TODO: Make input
+                    {
+                        orbitLines1.RemoveRange(0, 1);
+                    }
+                }
+                else
+                {
+                    orbitLines2.Add(new Point((int)x + 10, (int)y + 10));
+                    foo = orbitLines2.ToArray();
+                    g.DrawLines(new Pen(Color.White) { Width = 2 }, foo);
+                    if (orbitLines2.Count > 500) // TODO: Make input
+                    {
+                        orbitLines2.RemoveRange(0, 1);
+                    }
+                }
+            } catch { }
         }
         private void ValueUpdate_Click(object sender, EventArgs e)
         {
@@ -272,6 +298,7 @@ namespace NEA3
                 {
                     mass1.location.Update(cursorX, cursorY);
                     mouseMovingMass1 = true;
+                    orbitLines1.Clear();
                     mainPanel.Refresh();
                 }
                 if (cursorX >= mass2X - 15 & cursorX <= mass2X + 15 &
@@ -279,6 +306,7 @@ namespace NEA3
                 {
                     mass2.location.Update(cursorX, cursorY);
                     mouseMovingMass2 = true;
+                    orbitLines2.Clear();
                     mainPanel.Refresh();
                 }
             }

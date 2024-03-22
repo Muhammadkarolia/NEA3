@@ -14,7 +14,7 @@ namespace NEA3
 
         public string name;
         public BetterVector size;
-        
+       
         public BetterVector startPos;
         public BetterVector location;
         public BetterVector otherLocation;
@@ -59,5 +59,10 @@ namespace NEA3
             Console.WriteLine(name + " " + Math.Sqrt(xSqr + ySqr));
             return Math.Sqrt(xSqr + ySqr);
         }
+        public BetterVector centerLocation()
+        {
+            return new BetterVector(this.location.x + (this.width / 2), this.location.y + (this.height / 2));
+        }
     }
+
 }
