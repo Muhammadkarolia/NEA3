@@ -150,16 +150,23 @@ namespace NEA3
 
         private void Draw(Mass Mass_, Graphics g)
         {
+            // Draw mass
             float x = (float)Mass_.location.x;
             float y = (float)Mass_.location.y;
             g.FillEllipse(Mass_.color, x, y, Mass_.width, Mass_.height);
 
+            // Draw movement line thing
             float x1 = (float)Mass_.location.x + (float)Mass_.velocity.x * 10;
             float y2 = (float)Mass_.location.y + (float)Mass_.velocity.y * 10;
-            // pen, x1, y1, x2, y2
-             g.DrawLine(new Pen(Mass_.color) { Width = 2, EndCap = LineCap.ArrowAnchor }, x + 10, y + 10, x1, y2);
-        }
+            if (!(Mass_.getSpeed() < 1)) 
+            {
+                // pen, x1, y1, x2, y2
+                g.DrawLine(new Pen(Color.Green) { Width = 3, EndCap = LineCap.ArrowAnchor }, x + 10, y + 10, x1, y2);
+            }
 
+            // Draw orbit line
+
+        }
         private void ValueUpdate_Click(object sender, EventArgs e)
         {
             bool firstCheck = false;

@@ -103,4 +103,3 @@ namespace NEA3
         private void GraphForm_Load(object sender, EventArgs e) { }
     }
 }
-
