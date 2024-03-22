@@ -47,8 +47,7 @@ namespace NEA3
         private void Form1_Load(object sender, EventArgs e)
         {
             graphForm.Hide();
-            listMasses.Add(mass1);
-            listMasses.Add(mass2);
+            listMasses.Add(mass1); listMasses.Add(mass2);
 
             foreach (Mass mass in listMasses)
             {
@@ -77,7 +76,6 @@ namespace NEA3
             {
                 Draw(mass, e.Graphics);
             }
-
         }
 
         private void makeGravHappen(Mass m1, Mass m2)
@@ -99,9 +97,7 @@ namespace NEA3
                 Start.Enabled = false;
             }
             else 
-            { 
-                IsValuesCorrect.Text = "Update values before pressing start";
-            }
+            { IsValuesCorrect.Text = "Update values before pressing start"; }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -114,17 +110,19 @@ namespace NEA3
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            // Location Text Box
             string mass1Loc = $"X: {(int)mass1.location.x} Y: {(int)mass1.location.y}";
             string mass2Loc = $"X: {(int)mass2.location.x} Y: {(int)mass2.location.y}";
             locationBox.Text = mass1Loc; 
             locationBox.AppendText(Environment.NewLine);
             locationBox.AppendText(mass2Loc);
+
+            // Graph work
             Point Coords1 = new Point(xGraph, 50 * (int)mass1.getSpeed() + 150);
             Point Coords2 = new Point(xGraph, 50 * (int)mass2.getSpeed() + 150);
             if (graphFormActive & isRunning) { graphForm.AddPoint(Coords1, Coords2); }
-            Console.WriteLine(Coords2 + " YAYYY");
             xGraph += 1;
-            Console.WriteLine(mass1.getSpeed() + " m2: " + mass2.getSpeed());
+            
             mainPanel.Refresh();
         }
 
@@ -138,13 +136,14 @@ namespace NEA3
             orbitLines1.Clear();    orbitLines2.Clear();
             xGraph = 30;
 
-            // Also not expandalbe, TOODO: Make expandalbe
-            mass1.location.Update(mass1.startPos.x, mass1.startPos.y);
-            mass1.velocity.Update(0, 0);
-            mass1.acceleration.Update(0, 0);
-            mass2.location.Update(mass2.startPos.x, mass2.startPos.y);
-            mass2.velocity.Update(0, 0);
-            mass2.acceleration.Update(0, 0);
+            // Resets location, velosity and accselration
+            foreach (Mass mass in listMasses)
+            {
+                mass.location = mass.startPos;
+                mass.velocity.Update(0, 0);
+                mass.acceleration.Update(0, 0);
+            }
+
             timer1.Stop();
             mainPanel.Refresh();                
             graphForm.Reset();
@@ -160,14 +159,10 @@ namespace NEA3
             // Draw movement line thing
             float x1 = (float)Mass_.location.x + (float)Mass_.velocity.x * 10;
             float y2 = (float)Mass_.location.y + (float)Mass_.velocity.y * 10;
-            if (!(Mass_.getSpeed() < 1)) 
-            {
-                // pen, x1, y1, x2, y2
-                g.DrawLine(new Pen(Color.Green) { Width = 3, EndCap = LineCap.ArrowAnchor }, x + 10, y + 10, x1, y2);
-            }
+            if (!(Mass_.getSpeed() < 1)) // pen, x1, y1, x2, y2
+            { g.DrawLine(new Pen(Color.Green) { Width = 3, EndCap = LineCap.ArrowAnchor }, x + 10, y + 10, x1, y2); }
 
             // Draw orbit line
-
             Point[] foo;
             try
             {
@@ -202,10 +197,8 @@ namespace NEA3
             // if it is 0 then the txt is no possialbe be int
             // the secound item is the converted text#
             // Not expandalbe, TOODO: Make expandalbe
-            //Mass
             Int64[] firstMassBox = MathPlus.CheckInt(Mass1tb.Text);
             Int64[] secMassBox = MathPlus.CheckInt(Mass2tb.Text);
-
 
             // For first mass Force
             double[] StartForceX1 = MathPlus.CheckDouble(XStartForce1.Text);

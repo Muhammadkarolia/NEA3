@@ -10,7 +10,7 @@ namespace NEA3
 {
     static class MathPlus
     {
-        private const double G = 6.6743e-11; //0.000000000066743
+        private const double G = 6.6743e-11; // 0.000000000066743
 
         public static BetterVector ForceOfGrav(Mass m)
         {
@@ -52,10 +52,11 @@ namespace NEA3
         }
     }
 
+    // Less stuff then Point
     struct BetterVector
     {
-        private double x_;
-        private double y_;
+        private double x_; 
+        private double y_; 
 
         public BetterVector(double x, double y)
         {
