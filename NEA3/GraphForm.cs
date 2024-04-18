@@ -95,10 +95,6 @@ namespace NEA3
             { mass2Panel.Hide(); isChange = false; Identifier.Text = "Mass1 shown"; }
         }
 
-        public bool isChanged()
-        {
-            return isChange;
-        }
 
         private void GraphForm_Load(object sender, EventArgs e) { }
     }

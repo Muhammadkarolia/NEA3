@@ -1,6 +1,7 @@
 ﻿using NEA3;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,16 +13,16 @@ namespace NEA3
     {
         private const double G = 6.6743e-11; // 0.000000000066743
 
-        public static BetterVector ForceOfGrav(Mass m)
+        public static BetterVector ToMove(Mass m)
         {
-            BetterVector forceVector = new BetterVector();
-            forceVector.Sub(m.otherLocation, m.location);
-            float distanceSqr = forceVector.Dist() * forceVector.Dist();
+            BetterVector vector = new BetterVector();
+            vector.Sub(m.otherLocation, m.location);
+            float distanceSqr = vector.Dist() * vector.Dist();
 
             double forceG = G * (m.mass * m.otherMass / distanceSqr);
-            forceVector.Mult((float)forceG);
+            vector.Mult((float)forceG);
 
-            return forceVector;
+            return vector;
         }
 
         // Rnd function the mathPlus class
@@ -33,9 +34,9 @@ namespace NEA3
             {
                 isInt = 1;
             }
-            Int64[] array = { isInt, Temp };
+            Int64[] Foo = { isInt, Temp };
 
-            return array;
+            return Foo;
         }
 
         public static double[] CheckDouble(string varToCheck)
@@ -46,13 +47,13 @@ namespace NEA3
             {
                 isDouble = 1;
             }
-            double[] array = { isDouble, Temp };
+            double[] Foo = { isDouble, Temp };
 
-            return array;
+            return Foo;
         }
     }
-
-    // Less stuff then Point
+     
+    // Less stuff then Point struct
     struct BetterVector
     {
         private double x_; 

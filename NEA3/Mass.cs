@@ -11,8 +11,7 @@ namespace NEA3
 {
     internal class Mass
     {
-
-        public string name;
+        public readonly string name;
         public BetterVector size;
        
         public BetterVector startPos;

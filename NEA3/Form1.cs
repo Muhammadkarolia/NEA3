@@ -23,7 +23,7 @@ namespace NEA3
         private static List<Mass> listMasses = new List<Mass>();
         private double xStartingForce1; // maybey TODO: Also add velocity 
         private double yStartingForce1;
-        private double xStartingForce2; 
+        private double xStartingForce2;
         private double yStartingForce2;
         private List<Point> orbitLines1 = new List<Point>();
         private List<Point> orbitLines2 = new List<Point>();
@@ -83,20 +83,20 @@ namespace NEA3
             m1.otherMass = m2.mass;
             m1.location.Update(m1.location.x, m1.location.y);
             m1.otherLocation.Update(m2.location.x, m2.location.y);
-            BetterVector force = MathPlus.ForceOfGrav(m1);
-            m1.Move(force);
+            BetterVector distanceToMove = MathPlus.ToMove(m1);
+            m1.Move(distanceToMove);
         }
 
         private void Start_Click(object sender, EventArgs e)
         {
-            if (canRun) 
-            { 
+            if (canRun)
+            {
                 isRunning = true;
                 timer1.Start();
                 Stop.Enabled = true;
                 Start.Enabled = false;
             }
-            else 
+            else
             { IsValuesCorrect.Text = "Update values before pressing start"; }
         }
 
@@ -113,7 +113,7 @@ namespace NEA3
             // Location Text Box
             string mass1Loc = $"X: {(int)mass1.location.x} Y: {(int)mass1.location.y}";
             string mass2Loc = $"X: {(int)mass2.location.x} Y: {(int)mass2.location.y}";
-            locationBox.Text = mass1Loc; 
+            locationBox.Text = mass1Loc;
             locationBox.AppendText(Environment.NewLine);
             locationBox.AppendText(mass2Loc);
 
@@ -122,7 +122,7 @@ namespace NEA3
             Point Coords2 = new Point(xGraph, 50 * (int)mass2.getSpeed() + 150);
             if (graphFormActive & isRunning) { graphForm.AddPoint(Coords1, Coords2); }
             xGraph += 1;
-            
+
             mainPanel.Refresh();
         }
 
@@ -132,8 +132,8 @@ namespace NEA3
             Start.Enabled = true;
             Stop.Enabled = false;
             canRun = false;
-            xStartingForce1 = 0;    yStartingForce1 = 0;
-            orbitLines1.Clear();    orbitLines2.Clear();
+            xStartingForce1 = 0; yStartingForce1 = 0;
+            orbitLines1.Clear(); orbitLines2.Clear();
             xGraph = 30;
 
             // Resets location, velosity and accselration
@@ -145,7 +145,7 @@ namespace NEA3
             }
 
             timer1.Stop();
-            mainPanel.Refresh();                
+            mainPanel.Refresh();
             graphForm.Reset();
         }
 
@@ -171,7 +171,7 @@ namespace NEA3
                     orbitLines1.Add(new Point((int)x + 10, (int)y + 10));
                     foo = orbitLines1.ToArray();
                     g.DrawLines(new Pen(Color.White) { Width = 2 }, foo);
-                    if(orbitLines1.Count > 500) // TODO: Make input
+                    if (orbitLines1.Count > 500) // TODO: Make input
                     {
                         orbitLines1.RemoveRange(0, 1);
                     }
@@ -186,7 +186,8 @@ namespace NEA3
                         orbitLines2.RemoveRange(0, 1);
                     }
                 }
-            } catch { }
+            }
+            catch { }
         }
         private void ValueUpdate_Click(object sender, EventArgs e)
         {
@@ -229,7 +230,7 @@ namespace NEA3
             }
 
             // Changes IsValuesCorrect based on wich inputs are incorrect
-            if (firstCheck & secCheck) {canRun = true; IsValuesCorrect.Text = "Values updated successfully";} 
+            if (firstCheck & secCheck) { canRun = true; IsValuesCorrect.Text = "Values updated successfully"; }
             else if (!firstCheck & !secCheck) { IsValuesCorrect.Text = "Multiple bad inputs"; }
             else if (!firstCheck) { IsValuesCorrect.Text = "Bad mass input"; }
             else { IsValuesCorrect.Text = "Bad force input"; }
@@ -251,7 +252,7 @@ namespace NEA3
                     mass1.location.Update(x1[1], y1[1]);
                     mass2.location.Update(x2[1], y2[1]);
                     check = true;
-                } 
+                }
             }
 
             if (check) { IsValuesCorrect.Text = "location updated succsefuly"; }
